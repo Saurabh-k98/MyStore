@@ -11,8 +11,9 @@ class Collection(models.Model):
 
 class Product(models.Model):
     title       = models.CharField(max_length=255, unique=True)
+    slug = models.SlugField()
     description = models.TextField()
-    price       = models.DecimalField(max_digits=6, decimal_places=2)
+    unit_price       = models.DecimalField(max_digits=6, decimal_places=2)
     inventory   = models.IntegerField()
     last_update = models.DateTimeField(auto_now=True)
     collection  = models.ForeignKey(Collection, on_delete=models.PROTECT)
@@ -35,6 +36,9 @@ class Customer(models.Model):
     dob         = models.DateField(null=True)
     meambership = models.CharField(max_length=1, choices=MEAMBERSHIP_CHOICES, default=MEAMBERSHIP_BRONZE)
 
+    # class Meta:
+    #     db_table = 'store_customers'
+    #     indexes = [models.Index(fields=['f_name','l_name'])]
 
 class Order(models.Model):
     PMT_PENDING    = 'P'
